@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ItLab_Br5_181214.Models.Friend>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="FriendTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Friend_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Friend_name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Friend_id })
+                    }
+                    |
+                    @Html.ActionLink("Details", "Details", new { id = item.Friend_id })
+                    |
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Manager"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Friend_id })
+                    }
+                </td>
+            </tr>
+        }
+    <tbody>
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $("#FriendTable").DataTable();
+        });
+    </script>
+}
